@@ -1,0 +1,55 @@
+!!! 5
+%html
+  %head
+    %title Simple Spotter
+    :css
+      body {
+        font-family: Helvetica;
+      }
+      #container {
+        margin: 0 auto;
+        width: 700px
+      }
+      #logo {
+        -webkit-transform: rotate(-1.5deg);
+        -moz-transform: rotate(-1.5deg);
+        transform: rotate(-1.5deg);
+        clear: both;
+        background: #321900;
+        padding: 7px 10px;
+        margin: 25px 0 25px -25px;
+        width: 750px;
+      }
+      h1 {
+        color: white;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      h1 a {
+        text-decoration: none;
+        color: white;
+      }
+      ul {
+        text-indent: 0;
+        padding: 0;
+      }
+      li {
+        list-style-type: none;
+      }
+      .sighting {
+        font-size: 1.2em;
+      }
+      .date_author {
+        font-size: 0.9em;
+        color: #999;
+      }
+      pre {
+        white-space: pre-wrap;
+      }
+  %body
+    #container
+      #logo
+        %h1
+          %a{:href => '/'} Simple Spotter
+      = yield

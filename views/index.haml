@@ -1,0 +1,37 @@
+= haml :_authenticate_or_spot, :layout => false
+
+- unless session['access_token'].nil?
+  %h2 Recent Sightings
+  - if @sightings && @sightings['sightings'].any?
+    %ul.sightings
+      - @sightings['sightings'].each do |sighting|
+  
+        %li
+          %span.sighting
+            = sighting['item']['name']
+            @
+            = sighting['place']['name']
+          %span.date_author
+            -# Last spotted by
+            -# %span.spotter= sighting['person']['name']
+            at
+            %span.date= sighting['current_review_taken_at']
+  - else
+    %h2 No sightings found
+
+  - if @wanted && @wanted['sightings'].any?
+    %h2 Wanted Sightings
+    %ul.sightings
+      - @wanted['sightings'].each do |sighting|
+        %li
+          %span.sighting
+            = sighting['item']['name']
+            @
+            = sighting['place']['name']
+          %span.date_author
+            -# Last spotted by
+            -# %span.spotter= sighting['person']['name']
+            at
+            %span.date= sighting['current_review_taken_at']
+  - else
+    No wants found

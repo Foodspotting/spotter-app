@@ -1,0 +1,27 @@
+- if session['access_token'].nil?
+  %span <a href="/login">Log in</a> to Foodspotting to be able to spot food
+- else
+  Hey #{session['user']['name']}, you're ready to spot! 
+  %a{:href => '/logout'} [Log out]
+  %form{:method => 'post', :enctype => 'multipart/form-data', :action => '/spot'}
+    %p
+      Photo:
+      %input{:type => 'file', :name => 'review[photo]'}
+    %p
+      Food:
+      %input{:type => 'text', :name => 'item[name]'}
+    %p
+      Restaurant name:
+      %input{:type => 'text', :name => 'place[name]', :value => 'The Testing Diner'}
+    %p
+      Restaurant longitude:
+      %input{:type => 'text', :name => 'place[longitude]', :value => '0.0'}
+    %p
+      Restaurant latitude:
+      %input{:type => 'text', :name => 'place[latitude]', :value => '0.0'}
+    %p
+      Note:
+      %br
+      %textarea{:name => 'review[note]', :rows => "5", :cols => "40"}
+    %p
+      %input{:type => 'Submit', :name => "Spot"}
