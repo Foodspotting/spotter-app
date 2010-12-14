@@ -51,8 +51,8 @@ get '/callback' do
 end
 
 class Foodspotting
-  SITE_URL = 'http://localhost:3000'
-  API_URL = 'http://localhost:3000/api'
+  SITE_URL = 'http://www.foodspotting.com'
+  API_URL = 'http://www.foodspotting.com/api'
   
   def self.recent_sightings
     uri = URI.parse("#{API_URL}/sightings.json")
