@@ -16,9 +16,8 @@ Get familiar with the Foodspotting v1 API documentation
 
 [http://www.foodspotting.com/apps/new](http://www.fooodspotting.com/apps/new)
 
-Local application url: [http://localhost:4567](http://localhost:4567)
-
-Local callback url: [http://localhost:4567/callback](http://localhost:4567/callback)
+    Sinatra application url: http://localhost:4567
+    Sinatra callback url: http://localhost:4567/callback
 
 
 #### Add your API key & secret to simple_spotter.rb ####
@@ -38,3 +37,8 @@ Local callback url: [http://localhost:4567/callback](http://localhost:4567/callb
 
 
 Open [http://localhost:4567](http://localhost:4567) in your favorite browser
+
+
+## Credits ##
+
+Built by the amazing Kim Ahlström ([@kimtaro](http://twitter.com/kimtaro))
