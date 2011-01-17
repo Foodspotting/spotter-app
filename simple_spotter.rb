@@ -4,6 +4,7 @@ require 'json'
 require 'net/http'
 require 'uri'
 require 'oauth'
+require 'cgi'
 require 'pp'
 
 enable :sessions
@@ -53,29 +54,36 @@ end
 class Foodspotting
   SITE_URL = 'http://www.foodspotting.com'
   API_URL = 'http://www.foodspotting.com/api'
-  
+
   def self.recent_sightings
-    uri = URI.parse("#{API_URL}/sightings.json")
+    uri = URI.parse(api_url('/sightings'))
     res = Net::HTTP.get_response(uri)
     JSON.parse(res.body)
   end
 
   def self.logged_in_user(access_token)
-    uri = "#{API_URL}/people/current.json"
+    uri = api_url('/people/current')
     res = access_token.get(uri)
     JSON.parse(res.body)
   end
 
   def self.wanted_sightings(access_token)
-    uri = "#{API_URL}/sightings.json?filter=wanted"
+    uri = api_url('/sightings', {:filter => :wanted})
     res = access_token.get(uri)
     JSON.parse(res.body)
   end
-  
+
   def self.spot(post_body, access_token, content_type)
-    uri = "#{API_URL}/reviews.json"
+    uri = api_url('/reviews')
     res = access_token.post(uri, post_body, {'Content-Type' => content_type})
     JSON.parse(res.body)
   end
-  
+
+  private
+
+  def self.api_url(path, params = {})
+    params = {:api_key => API_KEY}.merge(params)
+    "#{API_URL}#{path}.json?" + (params.collect { |k, v| "#{k}=#{CGI::escape(v.to_s)}" } * '&')
+  end
+
 end
