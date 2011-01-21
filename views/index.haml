@@ -15,7 +15,7 @@
             -# Last spotted by
             -# %span.spotter= sighting['person']['name']
             at
-            %span.date= sighting['current_review_taken_at']
+            %span.date= sighting['current_review']['created_at']
   - else
     %h2 No sightings found
 
@@ -32,6 +32,7 @@
             -# Last spotted by
             -# %span.spotter= sighting['person']['name']
             at
-            %span.date= sighting['current_review_taken_at']
+            %span.date= sighting['current_review']['created_at']
   - else
     No wants found
+

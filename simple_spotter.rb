@@ -36,7 +36,7 @@ module Tubes
   end
 end
 
-class OAuth2
+module OAuth2
   class Consumer
     def initialize(key, secret, provider_url, redirect_uri)
       @key = key
@@ -104,23 +104,28 @@ class Foodspotting
   API_URL = 'http://www.foodspotting.com/api'
 
   def self.recent_sightings
-    res = Tubes::get("#{API_URL}/sightings", {'api_key' => API_KEY})
+    res = Tubes::get("#{API_URL}/sightings",
+                     {'api_key' => API_KEY})
     JSON.parse(res.body)
   end
 
   def self.logged_in_user(access_token)
-    res = Tubes::get("#{API_URL}/people/current", {'api_key' => API_KEY, 'oauth_token' => access_token})
+    res = Tubes::get("#{API_URL}/people/current",
+                     {'api_key' => API_KEY, 'oauth_token' => access_token})
     JSON.parse(res.body)
   end
 
   def self.wanted_sightings(access_token)
-    res = Tubes::get("#{API_URL}/sightings", {'filter' => 'wanted', 'api_key' => API_KEY, 'oauth_token' => access_token})
+    res = Tubes::get("#{API_URL}/sightings",
+                     {'filter' => 'wanted', 'api_key' => API_KEY, 'oauth_token' => access_token})
     JSON.parse(res.body)
   end
 
   def self.spot(post_body, access_token, content_type)
-    res = Tubes::post("#{API_URL}/reviews", {'api_key' => API_KEY, 'oauth_token' => access_token},
-                      post_body, {'Content-Type' => content_type})
+    res = Tubes::post("#{API_URL}/reviews",
+                      {'api_key' => API_KEY, 'oauth_token' => access_token},
+                      post_body,
+                      {'Content-Type' => content_type})
     JSON.parse(res.body)
   end
 end
