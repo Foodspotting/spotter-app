@@ -23,16 +23,16 @@ module Tubes
     http.request(req)
   end
 
-  def self.post(url, params = {}, data = nil, headers = {})
+  def self.post(url, params = {}, headers = {})
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     req = Net::HTTP::Post.new(uri.request_uri, headers)
-    if data.nil?
+    if params.kind_of?(Hash)
       req.set_form_data(params)
+      http.request(req)
     else
-      req.set_form_data(data)
+      http.request(req, params)
     end
-    http.request(req)
   end
 end
 
@@ -122,8 +122,7 @@ class Foodspotting
   end
 
   def self.spot(post_body, access_token, content_type)
-    res = Tubes::post("#{API_URL}/reviews",
-                      {'api_key' => API_KEY, 'oauth_token' => access_token},
+    res = Tubes::post("#{API_URL}/reviews?api_key=#{API_KEY}&oauth_token=#{access_token}",
                       post_body,
                       {'Content-Type' => content_type})
     JSON.parse(res.body)
