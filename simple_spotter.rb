@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'json'
-require 'net/http'
+require 'net/https'
 require 'uri'
 require 'cgi'
 require 'pp'
@@ -13,26 +13,36 @@ API_SECRET = ''
 REDIRECT_URI = 'http://localhost:4567/callback'
 
 module Tubes
-  def self.get(url, params = {}, headers = {})
-    if params.keys.size > 0
-      url = "#{url}?" + params.collect { |k,v| "#{k}=#{v}" } * '&'
+  def self.get uri, params = {}, headers = {}
+    uri = "#{uri}?" + params.map { |k, v| k + '=' + v } * '&'
+    call uri, Net::HTTP::Get, headers do |http, req|
+      http.request req
     end
-    uri = URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
-    req = Net::HTTP::Get.new(uri.request_uri, headers)
-    http.request(req)
   end
-
-  def self.post(url, params = {}, headers = {})
-    uri = URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
-    req = Net::HTTP::Post.new(uri.request_uri, headers)
-    if params.kind_of?(Hash)
-      req.set_form_data(params)
-      http.request(req)
-    else
-      http.request(req, params)
+  
+  def self.post uri , params = {}, headers = {}
+    call uri, Net::HTTP::Post, headers do |http, req|
+      if params.kind_of? Hash
+        req.set_form_data params
+        http.request req
+      else
+        http.request req, params
+      end
     end
+  end
+  
+  private
+  
+  def self.call uri, method, headers
+    uri = URI.parse uri
+    http = Net::HTTP.new uri.host, uri.port
+    if uri.scheme == 'https'
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE # BAD! http://www.rubyinside.com/how-to-cure-nethttps-risky-default-https-behavior-4010.html
+    end
+    req = method.new uri.request_uri
+    headers.keys.each { |k| req[k] = headers[k] }
+    yield http, req
   end
 end
 
