@@ -58,25 +58,25 @@ class Foodspotting
   def self.recent_sightings
     uri = URI.parse(api_url('/sightings'))
     res = Net::HTTP.get_response(uri)
-    JSON.parse(res.body)
+    JSON.parse(res.body)['data']['sightings']
   end
 
   def self.logged_in_user(access_token)
     uri = api_url('/people/current')
     res = access_token.get(uri)
-    JSON.parse(res.body)
+    JSON.parse(res.body)['data']['person']
   end
 
   def self.wanted_sightings(access_token)
     uri = api_url('/sightings', {:filter => :wanted})
     res = access_token.get(uri)
-    JSON.parse(res.body)
+    JSON.parse(res.body)['data']['sightings']
   end
 
   def self.spot(post_body, access_token, content_type)
     uri = api_url('/reviews')
     res = access_token.post(uri, post_body, {'Content-Type' => content_type})
-    JSON.parse(res.body)
+    JSON.parse(res.body)['data']['review']
   end
 
   private
