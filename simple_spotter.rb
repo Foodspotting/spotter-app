@@ -53,7 +53,7 @@ end
 
 class Foodspotting
   SITE_URL = 'http://www.foodspotting.com'
-  API_URL = 'http://www.foodspotting.com/api'
+  API_URL = 'http://www.foodspotting.com/api/v1'
 
   def self.recent_sightings
     uri = URI.parse(api_url('/sightings'))
