@@ -7,7 +7,7 @@ require 'oauth'
 require 'cgi'
 require 'pp'
 
-enable :sessions
+use Rack::Session::Pool
 
 API_KEY = ''
 API_SECRET = ''
