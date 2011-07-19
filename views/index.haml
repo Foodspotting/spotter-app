@@ -2,9 +2,9 @@
 
 - unless session['access_token'].nil?
   %h2 Recent Sightings
-  - if @sightings && @sightings['sightings'].any?
+  - if @sightings && @sightings.any?
     %ul.sightings
-      - @sightings['sightings'].each do |sighting|
+      - @sightings.each do |sighting|
   
         %li
           %span.sighting
@@ -19,10 +19,10 @@
   - else
     %h2 No sightings found
 
-  - if @wanted && @wanted['sightings'].any?
+  - if @wanted && @wanted.any?
     %h2 Wanted Sightings
     %ul.sightings
-      - @wanted['sightings'].each do |sighting|
+      - @wanted.each do |sighting|
         %li
           %span.sighting
             = sighting['item']['name']

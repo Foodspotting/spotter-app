@@ -6,7 +6,7 @@ require 'uri'
 require 'cgi'
 require 'pp'
 
-enable :sessions
+use Rack::Session::Pool
 
 API_KEY = ''
 API_SECRET = ''
@@ -111,30 +111,30 @@ end
 
 class Foodspotting
   SITE_URL = 'http://www.foodspotting.com'
-  API_URL = 'http://www.foodspotting.com/api'
+  API_URL = 'http://www.foodspotting.com/api/v1'
 
   def self.recent_sightings
     res = Tubes::get("#{API_URL}/sightings",
                      {'api_key' => API_KEY})
-    JSON.parse(res.body)
+    JSON.parse(res.body)['data']['sightings']
   end
 
   def self.logged_in_user(access_token)
     res = Tubes::get("#{API_URL}/people/current",
                      {'api_key' => API_KEY, 'oauth_token' => access_token})
-    JSON.parse(res.body)
+    JSON.parse(res.body)['data']['person']
   end
 
   def self.wanted_sightings(access_token)
     res = Tubes::get("#{API_URL}/sightings",
                      {'filter' => 'wanted', 'api_key' => API_KEY, 'oauth_token' => access_token})
-    JSON.parse(res.body)
+    JSON.parse(res.body)['data']['sightings']
   end
 
   def self.spot(post_body, access_token, content_type)
     res = Tubes::post("#{API_URL}/reviews?api_key=#{API_KEY}&oauth_token=#{access_token}",
                       post_body,
                       {'Content-Type' => content_type})
-    JSON.parse(res.body)
+    JSON.parse(res.body)['data']['review']
   end
 end

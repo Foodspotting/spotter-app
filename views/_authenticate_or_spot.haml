@@ -1,6 +1,7 @@
 - if session['access_token'].nil?
   %span <a href="/login">Log in</a> to Foodspotting to be able to spot food
 - else
+  - sharing = session['user']['sharing_available_for'] || {}
   Hey #{session['user']['name']}, you're ready to spot! 
   %a{:href => '/logout'} [Log out]
   %form{:method => 'post', :enctype => 'multipart/form-data', :action => '/spot'}
@@ -19,6 +20,20 @@
     %p
       Restaurant latitude:
       %input{:type => 'text', :name => 'place[latitude]', :value => '0.0'}
+
+    %p
+      Share to Facebook:
+      %input{:type => 'checkbox', :name => 'share_to[facebook]', :disabled => !sharing['facebook']}
+    %p
+      Share to Flickr:
+      %input{:type => 'checkbox', :name => 'share_to[flickr]', :disabled => !sharing['flickr']}
+    %p
+      Share to Foursquare:
+      %input{:type => 'checkbox', :name => 'share_to[foursquare]', :disabled => !sharing['foursquare']}
+    %p
+      Share to Twitter:
+      %input{:type => 'checkbox', :name => 'share_to[twitter]', :disabled => !sharing['twitter']}
+    
     %p
       Note:
       %br

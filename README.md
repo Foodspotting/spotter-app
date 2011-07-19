@@ -14,7 +14,7 @@ Get familiar with the Foodspotting v1 API documentation
 
 #### Register your application to get an API Key ####
 
-[http://www.foodspotting.com/apps/new](http://www.fooodspotting.com/apps/new)
+[http://www.foodspotting.com/clients/new](http://www.foodspotting.com/clients/new)
 
     Sinatra application url: http://localhost:4567
     Sinatra callback url: http://localhost:4567/callback
