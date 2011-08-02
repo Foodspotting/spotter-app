@@ -110,8 +110,8 @@ get '/callback' do
 end
 
 class Foodspotting
-  SITE_URL = 'http://www.foodspotting.com'
-  API_URL = 'http://www.foodspotting.com/api/v1'
+  SITE_URL = 'https://www.foodspotting.com'
+  API_URL = 'https://www.foodspotting.com/api/v1'
 
   def self.recent_sightings
     res = Tubes::get("#{API_URL}/sightings",
